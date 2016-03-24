@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Library.Adapters;
 using Library.Excptions;
+using NLog;
 
 namespace Library
 {
@@ -13,6 +14,7 @@ namespace Library
     {
         private IFileWorker fileWorker;
         private List<Book> bookCollection = new List<Book>();
+        private Logger logger = LogManager.GetCurrentClassLogger();
         public Repository(IFileWorker fileworker)
         {
             this.fileWorker = fileworker;
@@ -32,6 +34,7 @@ namespace Library
             }
             Book copiedBook = addedBook.DeepCopy();
             fileWorker.WriteBookToFile(copiedBook);
+            logger.Log(new LogEventInfo(LogLevel.Trace,"book added: ", copiedBook.ToString()));
             bookCollection.Add(copiedBook);
             return true;
         }
@@ -44,6 +47,7 @@ namespace Library
             {
                 throw new RemoveBookException("current book doesn't exist");
             }
+            logger.Log(new LogEventInfo(LogLevel.Trace, "book removed: ",wasRemoved.ToString()));
             fileWorker.ReWriteBooksToFile(bookCollection);
             return true;
         }
@@ -59,6 +63,7 @@ namespace Library
                     findedBooks.Add(book.DeepCopy());
                 }
             }
+            logger.Log(new LogEventInfo(LogLevel.Trace, "find books: ", string.Format("by tag: {0}  was found {1} books, ",tag, findedBooks.ToString())));
             return findedBooks;
         }
         public void SortBookByTag(SortTag tag)
@@ -83,6 +88,7 @@ namespace Library
             Book[] bookArray = bookCollection.ToArray();
             SortBooks(bookArray, sortStradegy);
             bookCollection = bookArray.ToList<Book>();
+            logger.Log(new LogEventInfo(LogLevel.Trace, "books sorted: ", tag.ToString()));
             fileWorker.ReWriteBooksToFile(bookCollection);
         }
         private void SortBooks(Book[] bookArray,ISortStradegy stradegy)
