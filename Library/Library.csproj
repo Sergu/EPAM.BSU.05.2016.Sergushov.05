@@ -46,12 +46,15 @@
     <Compile Include="Adapters\TxtFileWorker.cs" />
     <Compile Include="Book.cs" />
     <Compile Include="Exceptions\AddBookException.cs" />
-    <Compile Include="Exceptions\FindByTagException.cs" />
     <Compile Include="Exceptions\RemoveBookException.cs" />
-    <Compile Include="Exceptions\SortByTagException.cs" />
+    <Compile Include="Exceptions\TxtFileWorkerException.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="ISortStradegy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
+    <Compile Include="SortByAuthorStradegy.cs" />
+    <Compile Include="SortByPageCount.cs" />
+    <Compile Include="SortByTitleStradegy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

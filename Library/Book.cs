@@ -11,13 +11,13 @@ namespace Library
         public string author { get; private set; }
         public string title { get; private set; }
         public int pages { get; private set; }
-        public string separator { get; private set; }
+        public static string[] separator { get; private set; }
         public Book(string author,string title,int pages)
         {
             this.author = author;
             this.title = title;
             this.pages = pages;
-            this.separator = "@@@";
+            separator = new string[] {"@@@"};
         }
         public bool Equals(Book book)
         {
@@ -42,6 +42,10 @@ namespace Library
             {
                 return this.Equals(book);
             }
+        }
+        public Book DeepCopy()
+        {
+            return new Book(this.author, this.title, this.pages);
         }
         public override string ToString()
         {

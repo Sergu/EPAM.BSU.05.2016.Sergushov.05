@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Library.Excptions
 {
-    class RemoveBookException
+    public class RemoveBookException : Exception
     {
+        public new string Message {get;private set;}
+        public RemoveBookException(string message)
+        {
+            this.Message = message;
+        }
     }
 }

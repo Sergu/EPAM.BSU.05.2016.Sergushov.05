@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    enum SearchTag
+    public enum SortTag
     {
         byAuthor,
         byPagesCount,
@@ -14,9 +14,9 @@ namespace Library
     };
     public interface IRepository
     {
-        bool AddBook(Book book);
-        bool RemoveBook(Book book);
-        IEnumerable<Book> FindByTag(IEnumerable<string> tags);
-        void SortBookByTag();
+        bool AddBook(Book addedBook);
+        bool RemoveBook(Book removedBook);
+        List<Book> FindByTag(string tag);
+        void SortBookByTag(SortTag tag);
     }
 }

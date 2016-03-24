@@ -8,7 +8,8 @@ namespace Library.Adapters
 {
     public interface IFileWorker
     {
-        IEnumerable<Book> ReadFromFile();
-        bool WriteToFile(IEnumerable<Book> books);
+        List<Book> ReadFromFile();
+        bool ReWriteBooksToFile(List<Book> books);
+        bool WriteBookToFile(Book book);
     }
 }

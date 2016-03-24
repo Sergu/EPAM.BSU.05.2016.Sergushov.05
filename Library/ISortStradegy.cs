@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Excptions
+namespace Library
 {
-    class SortByTagException
+    public interface ISortStradegy
     {
+        public string GetKey(Book book);
     }
 }
