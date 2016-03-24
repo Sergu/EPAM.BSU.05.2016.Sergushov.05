@@ -17,7 +17,7 @@ namespace Library
             this.author = author;
             this.title = title;
             this.pages = pages;
-            separator = new string[] {"@@@"};
+            separator = new string[] {"---"};
         }
         public bool Equals(Book book)
         {
@@ -49,7 +49,7 @@ namespace Library
         }
         public override string ToString()
         {
-            return string.Format("Author:{0}{1}Title:{2}{3}Pages:{4}",author,separator,title,separator,pages);
+            return string.Format("Author:{0}" + separator[0] + "Title:{1}" + separator[0] + "Pages:{2}", author, title, pages);
         }
     }
 }

@@ -13,18 +13,17 @@ namespace Library.Adapters
         public string filePath
         {
             get;
-            private set
-            {
-                try
-                {
-                    filePath = value;
-                    FileStream fs = new FileStream(filePath, FileMode.Append, FileAccess.ReadWrite);
-                }
-                catch(FileNotFoundException ex)
-                {
-                    throw new TxtFileWorkerException(ex.Message);
-                }
-            }
+            private set;
+            //try
+            //{
+            //    filePath = value;
+            //    FileStream fs = new FileStream(filePath, FileMode.Append, FileAccess.ReadWrite);
+            //}
+            //catch(FileNotFoundException ex)
+            //{
+            //    throw new TxtFileWorkerException(ex.Message);
+            //}
+
         }
         public TxtFileWorker(string filePath)
         {
@@ -44,7 +43,18 @@ namespace Library.Adapters
         {
             FileStream fs = new FileStream(filePath, FileMode.Append, FileAccess.Write);
             BinaryWriter bw = new BinaryWriter(fs);
-            bw.Write(Encoding.GetEncoding(866).GetBytes(book.ToString()));
+            try
+            {
+                bw.Write(Encoding.GetEncoding(866).GetBytes(book.ToString()+"\r\n"));
+            }
+            catch (Exception ex)
+            {
+                throw new TxtFileWorkerException(ex.Message);
+            }
+            finally{
+                fs.Close();
+                bw.Close();
+            }
             return true;
         }
         public List<Book> ReadFromFile()

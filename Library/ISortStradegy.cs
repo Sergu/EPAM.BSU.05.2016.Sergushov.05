@@ -8,6 +8,6 @@ namespace Library
 {
     public interface ISortStradegy
     {
-        public string GetKey(Book book);
+        string GetKey(Book book);
     }
 }
