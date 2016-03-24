@@ -25,7 +25,7 @@ namespace Library
             
             foreach(Book book in bookCollection)
             {
-                if (book.Equals(book))
+                if (book.Equals(addedBook))
                 {
                     throw new AddBookException("this book already exist");
                 }

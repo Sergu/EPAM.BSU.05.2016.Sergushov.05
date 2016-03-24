@@ -103,40 +103,44 @@ namespace Library.Adapters
         }
         private Book ParseString(string parsedStr)
         {
-            string[] stringArr = parsedStr.Split(Book.separator, StringSplitOptions.RemoveEmptyEntries);
+            string[] stringArr = parsedStr.Split(Book.separator, StringSplitOptions.None);
             Book newBook;
             string author = "";
             string title = "";
             int pages = 0;
             foreach(string str in stringArr)
             {
-                string[] strArr = str.Split(new String[] { "Author:" }, StringSplitOptions.RemoveEmptyEntries);
+                string[] strArr = str.Split(new String[] { "Author:" }, StringSplitOptions.None);
                 if (strArr.Length > 1)
                 {
-                    foreach (string s in strArr)
+                    for(int i = 1;i<strArr.Length;i++)
                     {
+                        string s = strArr[i];
                         author = author + s;
                     }
                     continue;
                 }
-                strArr = str.Split(new String[] { "Title:" }, StringSplitOptions.RemoveEmptyEntries);
+                strArr = str.Split(new String[] { "Title:" }, StringSplitOptions.None);
                 if(strArr.Length > 1)
                 {
-                    foreach (string s in strArr)
+                    for (int i = 1; i < strArr.Length; i++)
                     {
+                        string s = strArr[i];
                         title = title + s;
                     }
                     continue;
                 }
-                strArr = str.Split(new String[] { "Pages:" }, StringSplitOptions.RemoveEmptyEntries);
+                strArr = str.Split(new String[] { "Pages:" }, StringSplitOptions.None);
                 if (strArr.Length > 1)
                 {
-                    foreach (string s in strArr)
+                    for (int i = 1; i < strArr.Length; i++)
                     {
-                        if(!int.TryParse(s,out pages))
+                        int numb;
+                        if (!int.TryParse(strArr[i], out numb))
                         {
                             throw new TxtFileWorkerException("Incorrect pageCount format");
-                        }                        
+                        }  
+                        pages = pages + numb;
                     }
                 }
             }

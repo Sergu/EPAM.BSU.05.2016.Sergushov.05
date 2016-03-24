@@ -11,13 +11,12 @@ namespace Library
         public string author { get; private set; }
         public string title { get; private set; }
         public int pages { get; private set; }
-        public static string[] separator { get; private set; }
+        public static string[] separator = new string[] { "---" };
         public Book(string author,string title,int pages)
         {
             this.author = author;
             this.title = title;
             this.pages = pages;
-            separator = new string[] {"---"};
         }
         public bool Equals(Book book)
         {
