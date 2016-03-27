@@ -8,7 +8,7 @@ using Library.Exceptions;
 
 namespace Library.Adapters
 {
-    public class TxtFileWorker : IFileWorker
+    public class TxtRepository : IRepository
     {
         public string filePath
         {
@@ -25,7 +25,7 @@ namespace Library.Adapters
             //}
 
         }
-        public TxtFileWorker(string filePath)
+        public TxtRepository(string filePath)
         {
             this.filePath = filePath;
         }
@@ -49,7 +49,7 @@ namespace Library.Adapters
             }
             catch (Exception ex)
             {
-                throw new TxtFileWorkerException(ex.Message);
+                throw new TxtRepositoryException(ex.Message);
             }
             finally{
                 fs.Close();
@@ -84,7 +84,7 @@ namespace Library.Adapters
             }
             catch(Exception ex)
             {
-                TxtFileWorkerException exception = new TxtFileWorkerException(ex.Message);
+                TxtRepositoryException exception = new TxtRepositoryException(ex.Message);
                 throw exception;
             }
             string[] stringArray = builder.ToString().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
@@ -138,7 +138,7 @@ namespace Library.Adapters
                         int numb;
                         if (!int.TryParse(strArr[i], out numb))
                         {
-                            throw new TxtFileWorkerException("Incorrect pageCount format");
+                            throw new TxtRepositoryException("Incorrect pageCount format");
                         }  
                         pages = pages + numb;
                     }
@@ -150,7 +150,7 @@ namespace Library.Adapters
             }
             else
             {
-                throw new TxtFileWorkerException("Incorrect Book format");
+                throw new TxtRepositoryException("Incorrect Book format");
             }
             return newBook;
         }

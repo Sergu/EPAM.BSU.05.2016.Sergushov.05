@@ -6,17 +6,11 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    public enum SortTag
-    {
-        byAuthor,
-        byPagesCount,
-        byTitle
-    };
-    public interface IRepository
+    public interface IService
     {
         bool AddBook(Book addedBook);
         bool RemoveBook(Book removedBook);
         List<Book> FindByTag(string tag);
-        void SortBookByTag(SortTag tag);
+        void SortBookByTag(ISortStradegy stradegy);
     }
 }

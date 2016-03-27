@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Library;
 using Library.Adapters;
-using Library.Excptions;
+using Library.Exceptions;
 
 namespace BooksLibraryApp
 {
@@ -13,7 +13,7 @@ namespace BooksLibraryApp
     {
         static void Main(string[] args)
         {
-            Repository repository = new Repository(new TxtFileWorker("a.txt"));
+            Service repository = new Service(new TxtRepository("a.txt"));
             repository.AddBook(new Book("Tolstoy", "War and Piece", 365));
             repository.AddBook(new Book("Dostoevsky", "Prestuplenie", 567));
             try
@@ -25,9 +25,10 @@ namespace BooksLibraryApp
                 Console.WriteLine(ex.Message);
             }
             repository.AddBook(new Book("Anderson", "Ugly duck", 2000));
-            repository.SortBookByTag(SortTag.byAuthor);
+            repository.SortBookByTag(new SortByPageCount());
             List<Book> books = repository.FindByTag("Ugly");
             repository.RemoveBook(books[0]);
+            repository.SortBookByTag(new SortByTitleStradegy());
             Console.ReadLine();
         }
     }

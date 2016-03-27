@@ -5,17 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Library.Adapters;
-using Library.Excptions;
+using Library.Exceptions;
 using NLog;
 
 namespace Library
 {
-    public class Repository : IRepository
+    public class Service : IService
     {
-        private IFileWorker fileWorker;
+        private IRepository fileWorker;
         private List<Book> bookCollection = new List<Book>();
         private Logger logger = LogManager.GetCurrentClassLogger();
-        public Repository(IFileWorker fileworker)
+        public Service(IRepository fileworker)
         {
             this.fileWorker = fileworker;
             bookCollection = this.fileWorker.ReadFromFile();
@@ -66,29 +66,15 @@ namespace Library
             logger.Log(new LogEventInfo(LogLevel.Trace, "find books: ", string.Format("by tag: {0}  was found {1} books, ",tag, findedBooks.ToString())));
             return findedBooks;
         }
-        public void SortBookByTag(SortTag tag)
+        public void SortBookByTag(ISortStradegy stradegy)
         {
-            ISortStradegy sortStradegy;
-            switch (tag){
-                case SortTag.byAuthor:
-                    sortStradegy = new SortByAuthorStradegy();
-                    break;
-                case SortTag.byTitle:
-                    sortStradegy = new SortByTitleStradegy();
-                    break;
-                case SortTag.byPagesCount:
-                    sortStradegy = new SortByPageCount();
-                    break;
-                default:
-                    sortStradegy = new SortByAuthorStradegy();
-                    break;
-            }
+            if (stradegy == null)
+                throw new SortBooksException("stradegy undefined");
             bookCollection.Clear();
             bookCollection = fileWorker.ReadFromFile();
             Book[] bookArray = bookCollection.ToArray();
-            SortBooks(bookArray, sortStradegy);
+            SortBooks(bookArray, stradegy);
             bookCollection = bookArray.ToList<Book>();
-            logger.Log(new LogEventInfo(LogLevel.Trace, "books sorted: ", tag.ToString()));
             fileWorker.ReWriteBooksToFile(bookCollection);
         }
         private void SortBooks(Book[] bookArray,ISortStradegy stradegy)
@@ -97,9 +83,7 @@ namespace Library
             {
                 for (int j = 0; j < bookArray.Length - i - 1; j++)
                 {
-                    string firstKey = stradegy.GetKey(bookArray[j]);
-                    string secKey = stradegy.GetKey(bookArray[j + 1]);
-                    if (firstKey.CompareTo(secKey)>0)
+                    if(stradegy.Compare(bookArray[j],bookArray[j+1])>0)
                     {
                         Swap(ref bookArray[j], ref bookArray[j + 1]);
                     }

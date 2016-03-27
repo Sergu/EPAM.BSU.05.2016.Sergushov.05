@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    public interface ISortStradegy
+    public interface ISortStradegy : IComparer<Book>
     {
         string GetKey(Book book);
     }

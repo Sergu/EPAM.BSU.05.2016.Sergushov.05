@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library.Adapters
 {
-    public interface IFileWorker
+    public interface IRepository
     {
         List<Book> ReadFromFile();
         bool ReWriteBooksToFile(List<Book> books);
