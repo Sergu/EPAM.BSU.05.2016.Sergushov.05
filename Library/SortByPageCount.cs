@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    public class SortByPageCount : ISortStradegy
+    public class SortByPageCount : IComparer<Book>
     {
-        public string GetKey(Book book)
+        private string GetKey(Book book)
         {
             return book.pages.ToString();
         }

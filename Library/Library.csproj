@@ -50,7 +50,6 @@
     <Compile Include="Exceptions\RemoveBookException.cs" />
     <Compile Include="Exceptions\TxtRepositoryException.cs" />
     <Compile Include="IService.cs" />
-    <Compile Include="ISortStradegy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="SortByAuthorStradegy.cs" />

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    public class SortByAuthorStradegy : ISortStradegy
+    public class SortByAuthorStradegy : IComparer<Book>
     {
-        public string GetKey(Book book)
+        private string GetKey(Book book)
         {
             return book.author;
         }

@@ -66,7 +66,7 @@ namespace Library
             logger.Log(new LogEventInfo(LogLevel.Trace, "find books: ", string.Format("by tag: {0}  was found {1} books, ",tag, findedBooks.ToString())));
             return findedBooks;
         }
-        public void SortBookByTag(ISortStradegy stradegy)
+        public void SortBookByTag(IComparer<Book> stradegy)
         {
             if (stradegy == null)
                 throw new SortBooksException("stradegy undefined");
@@ -77,7 +77,7 @@ namespace Library
             bookCollection = bookArray.ToList<Book>();
             fileWorker.ReWriteBooksToFile(bookCollection);
         }
-        private void SortBooks(Book[] bookArray,ISortStradegy stradegy)
+        private void SortBooks(Book[] bookArray, IComparer<Book> stradegy)
         {
             for (int i = 0; i < bookArray.Length - 1; i++)
             {
