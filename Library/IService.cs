@@ -11,6 +11,6 @@ namespace Library
         bool AddBook(Book addedBook);
         bool RemoveBook(Book removedBook);
         List<Book> FindByTag(string tag);
-        void SortBookByTag(ISortStradegy stradegy);
+        void SortBookByTag(IComparer<Book> stradegy);
     }
 }
