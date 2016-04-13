@@ -18,12 +18,12 @@ namespace Library
         public Service(IRepository fileworker)
         {
             this.fileWorker = fileworker;
-            bookCollection = this.fileWorker.ReadFromFile();
+            //bookCollection = new List<Book>(this.fileWorker.ReadFromFile());
         }
         public bool AddBook(Book addedBook)
         {
             bookCollection.Clear();
-            bookCollection = fileWorker.ReadFromFile();
+            bookCollection = new List<Book>(fileWorker.ReadFromFile());
             
             foreach(Book book in bookCollection)
             {
@@ -33,15 +33,15 @@ namespace Library
                 }
             }
             Book copiedBook = addedBook.DeepCopy();
-            fileWorker.WriteBookToFile(copiedBook);
-            logger.Log(new LogEventInfo(LogLevel.Trace,"book added: ", copiedBook.ToString()));
             bookCollection.Add(copiedBook);
+            fileWorker.ReWriteBooksToFile(bookCollection);
+            logger.Log(new LogEventInfo(LogLevel.Trace,"book added: ", copiedBook.ToString()));
             return true;
         }
         public bool RemoveBook(Book removedBook)
         {
             bookCollection.Clear();
-            bookCollection = fileWorker.ReadFromFile();
+            bookCollection = new List<Book>(fileWorker.ReadFromFile());
             bool wasRemoved = bookCollection.Remove(removedBook);
             if (wasRemoved == false)
             {
@@ -54,7 +54,7 @@ namespace Library
         public List<Book> FindByTag(string tag)
         {
             bookCollection.Clear();
-            bookCollection = fileWorker.ReadFromFile();
+            bookCollection = new List<Book>(fileWorker.ReadFromFile());
             List<Book> findedBooks = new List<Book>();
             foreach(Book book in bookCollection)
             {
@@ -71,7 +71,7 @@ namespace Library
             if (stradegy == null)
                 throw new SortBooksException("stradegy undefined");
             bookCollection.Clear();
-            bookCollection = fileWorker.ReadFromFile();
+            bookCollection = new List<Book>(fileWorker.ReadFromFile());
             Book[] bookArray = bookCollection.ToArray();
             SortBooks(bookArray, stradegy);
             bookCollection = bookArray.ToList<Book>();

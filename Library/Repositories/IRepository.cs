@@ -8,8 +8,8 @@ namespace Library.Adapters
 {
     public interface IRepository
     {
-        List<Book> ReadFromFile();
-        bool ReWriteBooksToFile(List<Book> books);
+        IEnumerable<Book> ReadFromFile();
+        bool ReWriteBooksToFile(IEnumerable<Book> books);
         bool WriteBookToFile(Book book);
     }
 }

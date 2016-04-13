@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Library.Exceptions
 {
-    public class TxtRepositoryException : Exception
+    public class RepositoryException : Exception
     {
         public new string Message { get; private set; }
-        public TxtRepositoryException(string exception)
+        public RepositoryException(string exception)
         {
             Message = exception;
         }

@@ -29,10 +29,21 @@ namespace Library.Adapters
         {
             this.filePath = filePath;
         }
-        public bool ReWriteBooksToFile(List<Book> books)
+        public bool ReWriteBooksToFile(IEnumerable<Book> books)
         {
-            FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-            fs.Close();
+            FileStream fs = null;
+            try
+            {
+                fs = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            }
+            catch(Exception ex)
+            {
+                throw new RepositoryException(ex.Message);
+            }
+            finally
+            {
+                fs.Close();
+            }
             foreach(Book book in books)
             {
                 WriteBookToFile(book);
@@ -49,7 +60,7 @@ namespace Library.Adapters
             }
             catch (Exception ex)
             {
-                throw new TxtRepositoryException(ex.Message);
+                throw new RepositoryException(ex.Message);
             }
             finally{
                 fs.Close();
@@ -57,7 +68,7 @@ namespace Library.Adapters
             }
             return true;
         }
-        public List<Book> ReadFromFile()
+        public IEnumerable<Book> ReadFromFile()
         {
             StringBuilder builder = new StringBuilder();
             try
@@ -84,7 +95,7 @@ namespace Library.Adapters
             }
             catch(Exception ex)
             {
-                TxtRepositoryException exception = new TxtRepositoryException(ex.Message);
+                RepositoryException exception = new RepositoryException(ex.Message);
                 throw exception;
             }
             string[] stringArray = builder.ToString().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
@@ -138,7 +149,7 @@ namespace Library.Adapters
                         int numb;
                         if (!int.TryParse(strArr[i], out numb))
                         {
-                            throw new TxtRepositoryException("Incorrect pageCount format");
+                            throw new RepositoryException("Incorrect pageCount format");
                         }  
                         pages = pages + numb;
                     }
@@ -150,7 +161,7 @@ namespace Library.Adapters
             }
             else
             {
-                throw new TxtRepositoryException("Incorrect Book format");
+                throw new RepositoryException("Incorrect Book format");
             }
             return newBook;
         }

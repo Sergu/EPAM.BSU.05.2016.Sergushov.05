@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Library
 {
+    [Serializable]
+    [DataContract(Name="Book")]
     public class Book : IEquatable<Book>
     {
+        [DataMember(Name="author")]
         public string author { get; private set; }
+        [DataMember(Name="title")]
         public string title { get; private set; }
+        [DataMember(Name="pages")]
         public int pages { get; private set; }
         public static string[] separator = new string[] { "---" };
         public Book(string author,string title,int pages)
